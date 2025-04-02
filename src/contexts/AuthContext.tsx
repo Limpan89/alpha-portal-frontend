@@ -31,6 +31,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<string | null>(null);
 
   useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+    if (authToken) setToken(authToken);
     setLoading(false);
   }, []);
 
@@ -38,7 +40,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signIn = async () => {};
 
-  const signOut = async () => {};
+  const signOut = async () => {
+    localStorage.removeItem("authToken");
+    setToken(null);
+    setUser(null);
+  };
 
   const authFetch = async (
     url: string,
