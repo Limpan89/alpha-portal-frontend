@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --font-standard: "Nunito", sans-serif;
+  --font-logo: "Comfortaa", sans-serif;
+
+  --blue: #2d99ff;
+
+  --white-100: #f5f7fa;
+
+  --grey-400: #e8e8e8;
+
+  --dark-400: #28263b;
+
+  --background-color: var(--white-100);
+
+  --text-color: var(--dark-400);
+}
+
+html,
+body {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: var(--font-standard);
+  font-style: normal;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100dvh;
+
+  .spinner {
+    width: 60px;
+    height: 60px;
+    border: 8px solid var(--gray-400);
+    border-top: 8px solid var(--blue);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+}

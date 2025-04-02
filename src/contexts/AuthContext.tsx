@@ -28,12 +28,12 @@ export const useAuth = (): AuthValues => useContext(AuthContext);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [token, setToken] = useState<string | null>(null);
-  const [user, setUser] = useState<string | null>(null);
+  const [user, setUser] = useState<string | null>("null");
 
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
     if (authToken) setToken(authToken);
-    setLoading(false);
+    setLoading(true);
   }, []);
 
   const signUp = async () => {};
