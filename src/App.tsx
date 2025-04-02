@@ -1,7 +1,9 @@
+import "./assets/css/style.css";
+import "./assets/css/animate.css";
+
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, useRoutes } from "react-router-dom";
-import "./assets/css/App.css";
 import { AuthProvider } from "./contexts/AuthContext";
 import { routesConfig } from "./routing/RoutesConfig";
 
