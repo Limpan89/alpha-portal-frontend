@@ -316,6 +316,14 @@ form {
   .btn-submit {
     margin-bottom: 2rem;
   }
+
+  .checkbox-group {
+    padding-top: 1rem;
+
+    label {
+      font-size: 15px;
+    }
+  }
 }
 
 #signup,
