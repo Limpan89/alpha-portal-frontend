@@ -1,4 +1,5 @@
 import "./assets/css/style.css";
+import "./assets/css/button.css";
 import "./assets/css/animate.css";
 
 import { StrictMode } from "react";
