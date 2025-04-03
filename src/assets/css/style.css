@@ -306,14 +306,26 @@ form {
   }
 }
 
+#signin {
+  .btn-submit {
+    margin-bottom: 3rem;
+  }
+}
+
+#signup {
+  .btn-submit {
+    margin-bottom: 2rem;
+  }
+}
+
 #signup,
 #signin {
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
 
   .content {
     background-color: var(--content-background-color);
-    padding: 6rem 6rem 1rem;
+    padding: 6rem 4rem 1rem;
     border-radius: 16px;
     box-shadow: 0 15px 15px var(--gray-300);
   }
@@ -333,22 +345,33 @@ form {
     margin-top: 1rem 0;
   }
 
+  .logotype {
+    margin-bottom: 1rem;
+    span {
+      display: block;
+    }
+  }
+
   .logo-footer {
     display: flex;
     justify-content: center;
     padding-top: 2.5rem;
   }
 
-  .btn-submit {
-    margin: 2rem 0 3rem;
-  }
-
   .form-group {
     padding-top: 0.8rem;
   }
 
+  .btn-submit {
+    margin-top: 2rem;
+  }
+
   @media (width >= 768px) {
     width: 600px;
+
+    .content {
+      padding: 6rem 6rem 1rem;
+    }
   }
 }
 
