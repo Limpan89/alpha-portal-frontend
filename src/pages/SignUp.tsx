@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import { LogotypeLink } from "../components/LogotypeLink";
 
 export const SignUp = () => {
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
+  const [fname, setFname] = useState<string>("");
+  const [lname, setLname] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirm, setConfirm] = useState<string>("");
+  const [terms, setTerms] = useState<boolean>(false);
 
   return (
     <div id="signup">
@@ -73,7 +74,13 @@ export const SignUp = () => {
               />
             </div>
             <div className="checkbox-group">
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                name="terms"
+                id="terms"
+                checked={terms}
+                onChange={(e) => setTerms(e.target.checked)}
+              />
               <label htmlFor="terms">
                 I accept{" "}
                 <Link to="#" className="text-link">
