@@ -72,6 +72,15 @@ export const SignUp = () => {
                 onChange={(e) => setConfirm(e.target.value)}
               />
             </div>
+            <div className="checkbox-group">
+              <input type="checkbox" />
+              <label htmlFor="terms">
+                I accept{" "}
+                <Link to="#" className="text-link">
+                  Terms and Conditions
+                </Link>
+              </label>
+            </div>
             <button type="submit" className="btn btn-submit">
               Create Account
             </button>
