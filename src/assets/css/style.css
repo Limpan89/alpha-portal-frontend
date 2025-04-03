@@ -11,7 +11,7 @@
   --font-standard: "Nunito", sans-serif;
   --font-logo: "Comfortaa", sans-serif;
 
-  --text-medium-bold: 600;
+  --text-semi-bold: 600;
 
   --blue-light-opacity: rgba(45, 125, 204, 0.1);
   --blue-light: #dbedff;
@@ -248,7 +248,7 @@ form {
 
   label {
     font-size: 15px;
-    font-weight: var(--text-medium-bold);
+    font-weight: var(--text-semi-bold);
   }
 
   input,
@@ -328,7 +328,7 @@ form {
 
   .section-footer {
     font-size: 15px;
-    font-weight: var(--text-medium-bold);
+    font-weight: var(--text-semi-bold);
     text-align: center;
     margin-top: 1rem 0;
   }
