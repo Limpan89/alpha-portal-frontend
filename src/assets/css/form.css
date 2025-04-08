@@ -1,0 +1,88 @@
+form {
+  width: 100%;
+  position: relative;
+
+  label {
+    font-size: 15px;
+    font-weight: var(--text-semi-bold);
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    font-size: 1em;
+    padding: 0.5rem 1rem;
+    border-radius: 16px;
+    border: 1px solid var(--form-input-border-color);
+    transition: var(--border-color) 0.1s ease-in-out;
+    outline: none;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--form-input-border-focus-color);
+  }
+
+  input::placeholder,
+  select::placeholder,
+  textarea::placeholder {
+    color: var(--form-input-placeholder-color);
+    font-size: 0.9rem;
+  }
+
+  .form-group {
+    position: relative;
+    display: grid;
+    gap: 0.2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .field-group {
+    position: relative;
+  }
+
+  .checkbox-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    label {
+      display: flex;
+      justify-content: center;
+      gap: 0.3rem;
+    }
+  }
+
+  input[type="checkbox"] {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+.input-validation-error,
+.input-validation-error:focus {
+  border-color: var(--form-error-input-border-color);
+}
+
+.field-validation-error {
+  background-color: var(--form-error-message-background-color);
+  color: var(--form-error-message-text-color);
+  font-size: 0.8em;
+  padding: 0.48em 1rem;
+  border-radius: 14px;
+  position: absolute;
+  top: 3px;
+  right: 0.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.field-validation-error::before {
+  content: "\f071";
+  font-family: var(--font-fa-pro);
+  font-size: 1.2em;
+}
