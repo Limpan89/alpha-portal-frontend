@@ -3,16 +3,16 @@ import { Link } from "react-router-dom";
 import { LogotypeLink } from "../components/LogotypeLink";
 
 export const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   return (
     <div id="signin">
       <div className="content">
-        <div className="section-header">
+        <header className="section-header">
           <h1>Login</h1>
-        </div>
-        <div className="section-body">
+        </header>
+        <section className="section-body">
           <form>
             <div className="form-group">
               <label htmlFor="email">Email</label>
@@ -40,15 +40,15 @@ export const SignIn = () => {
               Log In
             </button>
           </form>
-          <div className="section-footer">
+          <footer className="section-footer">
             <p>
               Don't have an account?{" "}
               <Link to="/auth/signup" className="text-link">
                 Sign Up
               </Link>
             </p>
-          </div>
-        </div>
+          </footer>
+        </section>
       </div>
       <div className="logo-footer">
         <LogotypeLink />
