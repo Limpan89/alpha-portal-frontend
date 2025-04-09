@@ -1,3 +1,6 @@
+import { EditDropdown } from "./EditDropdown";
+import { TimeRemaining } from "./TimeRemaining";
+
 export const ProjectCard = ({
   project,
   client,
@@ -9,12 +12,6 @@ export const ProjectCard = ({
   description: string;
   days: number;
 }) => {
-  const RemaningTime = (days: number): string => {
-    const weeks = Math.floor(days / 7);
-    if (weeks === 0) return `${days} ${days > 1 ? "days" : "day"} left`;
-    return `${weeks} ${weeks > 1 ? "weeks" : "week"} left`;
-  };
-
   return (
     <section className="content project-card">
       <header className="project-header">
@@ -27,9 +24,12 @@ export const ProjectCard = ({
           <h6 className="title">{project}</h6>
           <p className="client">{client}</p>
         </div>
+        <EditDropdown />
       </header>
       <div className="project-body">{description}</div>
-      <footer className="project-footer">{RemaningTime(days)}</footer>
+      <footer className="project-footer">
+        <TimeRemaining days={2} />
+      </footer>
     </section>
   );
 };
