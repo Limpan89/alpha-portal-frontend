@@ -296,6 +296,32 @@ h6,
   }
 }
 
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: auto;
+
+  .meatballs {
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 12px;
+    width: 40px;
+    height: 40px;
+
+    .dot {
+      border-radius: 50%;
+      width: 5px;
+      height: 5px;
+      background-color: var(--gray-800);
+    }
+  }
+  .meatballs:hover {
+    background-color: var(--background-color);
+  }
+}
+
 .text-link {
   text-decoration: none;
   color: var(--link-color);
