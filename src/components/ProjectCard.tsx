@@ -28,7 +28,7 @@ export const ProjectCard = ({
       </header>
       <div className="project-body">{description}</div>
       <footer className="project-footer">
-        <TimeRemaining days={2} />
+        <TimeRemaining days={days} />
       </footer>
     </section>
   );
