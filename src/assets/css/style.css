@@ -496,6 +496,27 @@ h6,
   .project-footer {
     margin-top: auto;
   }
+
+  .time-remaining {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 10px;
+    gap: 0.4rem;
+    padding: 0.5rem;
+  }
+  .time-weeks {
+    background-color: green;
+  }
+  .time-days {
+    background-color: yellow;
+  }
+  .time-day {
+    background-color: red;
+  }
+  .time-icon {
+  }
+  .time-text {
+  }
 }
 
 #clients {
