@@ -1,3 +1,5 @@
+import { MdOutlineAccessTimeFilled } from "react-icons/md";
+
 export const TimeRemaining = ({ days }: { days: number }) => {
   const RemainingTime = (days: number): string => {
     const weeks = Math.floor(days / 7);
@@ -13,8 +15,8 @@ export const TimeRemaining = ({ days }: { days: number }) => {
 
   return (
     <div className={`time-remaining ${TimeGroup(days)}`}>
-      <div className="time-icon">icon</div>
-      {RemainingTime(days)}
+      <MdOutlineAccessTimeFilled className="time-icon" />
+      <div className="time-text">{RemainingTime(days)}</div>
     </div>
   );
 };
