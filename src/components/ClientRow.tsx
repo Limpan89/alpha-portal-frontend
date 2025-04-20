@@ -56,9 +56,9 @@ export const ClientRow = ({
   return (
     <div className="client-row">
       <input type="checkbox" />
-      <div className="client-profile">
-        <div className="client-image">
-          <img src={client.image ?? ""} alt="client profile image" />
+      <div>
+        <div className="btn-account">
+          <img src={client.image ?? undefined} alt="client profile image" />
         </div>
         <div>
           <div className="client-name">{client.clientName}</div>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Client, defaultClient, useClient } from "../contexts/ClientContext";
 import { ClientRow } from "../components/ClientRow";
+import { AddClientModal } from "../components/AddClientModal";
+import { EditClientModal } from "../components/EditClientModal";
 
 export const Clients = () => {
   const { clients } = useClient();
@@ -33,16 +35,18 @@ export const Clients = () => {
       <div className="card clients-container">
         <header className="client-header">
           <input type="checkbox" />
-          <div className="heaer-item">Customer Name</div>
-          <div className="heaer-item">Location</div>
-          <div className="heaer-item">Phone</div>
-          <div className="heaer-item">Date</div>
-          <div className="heaer-item">Status</div>
+          <div className="header-item">Customer Name</div>
+          <div className="header-item">Location</div>
+          <div className="header-item">Phone</div>
+          <div className="header-item">Date</div>
+          <div className="header-item">Status</div>
         </header>
         {clients.map((c) => (
           <ClientRow client={c} setSelected={setSelected} />
         ))}
       </div>
+      <AddClientModal show={showAdd} close={setShowAdd} />
+      <EditClientModal show={showEdit} close={setShowEdit} client={selected} />
     </div>
   );
 };
