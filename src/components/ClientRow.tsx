@@ -55,12 +55,15 @@ export const ClientRow = ({
 
   return (
     <div className="client-row">
+      <input type="checkbox" />
       <div className="client-profile">
         <div className="client-image">
           <img src={client.image ?? ""} alt="client profile image" />
         </div>
-        <div className="client-name">{client.clientName}</div>
-        <div className="client-email">{client.email}</div>
+        <div>
+          <div className="client-name">{client.clientName}</div>
+          <div className="client-email">{client.email}</div>
+        </div>
       </div>
       <div className="client-location">{client.postalAddress.cityName}</div>
       <div className="client-phone">{client.phone}</div>

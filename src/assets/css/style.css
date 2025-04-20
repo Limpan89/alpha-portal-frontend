@@ -949,3 +949,34 @@ h6,
 .modal > .modal-content main,
 .modal > .modal-content .modal-body {
 }
+
+.client-header {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 4fr 2fr 2fr 2fr 1fr 1fr;
+  margin-bottom: 0.5rem;
+  background-color: var(--background-color);
+}
+
+.client-row {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 4fr 2fr 2fr 2fr 1fr 1fr;
+  margin-bottom: 1rem;
+
+  .client-profile {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+
+  .client-image {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+
+  .client-status {
+    background-color: #187848;
+    border-radius: var(--border-radius);
+  }
+}

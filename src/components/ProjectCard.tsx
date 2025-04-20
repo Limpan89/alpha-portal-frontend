@@ -58,7 +58,7 @@ export const ProjectCard = ({
     <section className="content project-card">
       <header className="project-header">
         <img
-          src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png"
+          src={project.image ?? undefined}
           alt="Project image"
           className="project-image"
         />

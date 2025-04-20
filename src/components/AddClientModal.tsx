@@ -2,57 +2,56 @@ import { IoMdClose } from "react-icons/io";
 import { FormikErrors, FormikValues, useFormik } from "formik";
 import { API_URL } from "../Constants";
 import { useAuth } from "../contexts/AuthContext";
+import { useUser } from "../contexts/UserContext";
+import { useClient } from "../contexts/ClientContext";
 import { useEffect } from "react";
-import { User } from "../contexts/UserContext";
 
 interface FormValues {
   NewImage: File | null;
-  FirstName: string;
-  LastName: string;
+  ClientName: string;
+  Email: string;
   Phone: string;
-  JobTitle: string;
-  Role: string;
-  Address: string;
+  BillingAddress: string;
+  BillingReference: string;
   PostalCode: number;
   CityName: string;
 }
 
 const validateForm = ({
   NewImage,
-  FirstName,
-  LastName,
+  ClientName,
+  Email,
   Phone,
-  JobTitle,
-  Role,
-  Address,
+  BillingAddress,
+  BillingReference,
   PostalCode,
   CityName,
 }: FormValues) => {
   const errors: FormikErrors<FormikValues> = {};
 
   if (
-    !FirstName ||
-    !LastName ||
+    !ClientName ||
+    !Email ||
     !Phone ||
-    !JobTitle ||
-    !Role ||
-    !Address ||
+    !BillingAddress ||
+    !BillingReference ||
     !PostalCode ||
     !CityName
   )
-    errors.user = "Required fields missing";
-  else if (!/^(?:\+46|0046|0)([ ]?\d{1,3}){2,4}$/i.test(Phone))
-    errors.user = "Invalid phonenumber";
+    errors.client = "Required fields missing";
+  else if (
+    !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i.test(Email) ||
+    !/^(?:\+46|0046|0)([ ]?\d{1,3}){2,4}$/i.test(Phone)
+  )
+    errors.client = "Invalid email or phonenumber";
 };
 
-export const EditMemberModal = ({
+export const AddClientModal = ({
   show,
   close,
-  user,
 }: {
   show: boolean;
   close: React.Dispatch<React.SetStateAction<boolean>>;
-  user: User;
 }) => {
   const HandleCloseClick = () => {
     close(false);
@@ -67,17 +66,13 @@ export const EditMemberModal = ({
   const handleSubmit = async (values: FormValues) => {
     const formData = new FormData();
 
-    formData.append("Id", user.id);
-    formData.append("FirstName", values.FirstName);
-    formData.append("LastName", values.LastName);
-    formData.append("Email", user.email);
-    formData.append("Phone", values.Phone);
-    formData.append("JobTitle", values.JobTitle);
-    formData.append("Role", values.Role);
-    formData.append("StreetAddress", values.Address);
+    formData.append("ClientName", values.ClientName);
+    formData.append("Email", values.Email ?? "");
+    formData.append("Phone", values.Phone ?? "");
+    formData.append("BillingAddress", values.BillingAddress);
+    formData.append("BillingReference", values.BillingReference);
     formData.append("PostalCode", values.PostalCode.toString());
     formData.append("CityName", values.CityName);
-    formData.append("Image", user.image ?? "");
 
     if (values.NewImage) {
       formData.append("NewImage", values.NewImage);
@@ -91,8 +86,8 @@ export const EditMemberModal = ({
         headers["X-ADM-API-KEY"] = apiKey;
       }
 
-      const response = await fetch(API_URL + "/api/users", {
-        method: "PUT",
+      const response = await fetch(API_URL + "/api/clients", {
+        method: "POST",
         headers,
         body: formData,
       });
@@ -110,12 +105,11 @@ export const EditMemberModal = ({
   const formik = useFormik({
     initialValues: {
       NewImage: null as File | null,
-      FirstName: "",
-      LastName: "",
+      ClientName: "",
+      Email: "",
       Phone: "",
-      JobTitle: "",
-      Role: "",
-      Address: "",
+      BillingAddress: "",
+      BillingReference: "",
       PostalCode: 0,
       CityName: "",
     },
@@ -126,22 +120,6 @@ export const EditMemberModal = ({
     },
   });
 
-  useEffect(() => {
-    formik.resetForm({
-      values: {
-        NewImage: null as File | null,
-        FirstName: user.firstName,
-        LastName: user.lastName,
-        Phone: user.phone ?? "",
-        JobTitle: user.jobTitle ?? "",
-        Role: user.role,
-        Address: user.streetAddress ?? "",
-        PostalCode: user.postalAddress?.postalCode ?? 0,
-        CityName: user.postalAddress?.cityName ?? "",
-      },
-    });
-  }, [user]);
-
   return (
     <section
       id="add-member-modal"
@@ -149,7 +127,7 @@ export const EditMemberModal = ({
     >
       <div className="card">
         <header className="card-header">
-          <h3>Edit Member</h3>
+          <h3>New Client</h3>
           <button className="btn-close" onClick={HandleCloseClick}>
             <IoMdClose />
           </button>
@@ -181,46 +159,29 @@ export const EditMemberModal = ({
                 }}
               />
             </div>
-            <div className="form-horizontal-group">
-              <div className="form-group">
-                <label className="form-label" htmlFor="">
-                  First Name
-                </label>
-                <input
-                  className="form-input"
-                  type="text"
-                  id="FirstName"
-                  name="FirstName"
-                  value={formik.values.FirstName}
-                  onChange={formik.handleChange}
-                />
-              </div>
-              <div className="form-group">
-                <label className="form-label" htmlFor="">
-                  Last Name
-                </label>
-                <input
-                  className="form-input"
-                  type="text"
-                  id="LastName"
-                  name="LastName"
-                  value={formik.values.LastName}
-                  onChange={formik.handleChange}
-                />
-              </div>
+            <div className="form-group">
+              <label className="form-label" htmlFor="">
+                Client Name
+              </label>
+              <input
+                className="form-input"
+                type="text"
+                id="ClientName"
+                name="ClientName"
+                value={formik.values.ClientName}
+                onChange={formik.handleChange}
+              />
             </div>
-
             <div className="form-group">
               <label className="form-label" htmlFor="">
                 Email
               </label>
               <input
-                disabled
                 className="form-input"
                 type="email"
                 id="Email"
                 name="Email"
-                value={user.email}
+                value={formik.values.Email}
                 onChange={formik.handleChange}
               />
             </div>
@@ -246,42 +207,9 @@ export const EditMemberModal = ({
               <input
                 className="form-input"
                 type="text"
-                id="JobTitle"
-                name="JobTitle"
-                value={formik.values.JobTitle}
-                onChange={formik.handleChange}
-              />
-            </div>
-
-            <div className="form-group">
-              <label className="form-label" htmlFor="">
-                Member Role
-              </label>
-              <select
-                className="form-input"
-                id="Role"
-                name="Role"
-                value={formik.values.Role}
-                onChange={formik.handleChange}
-              >
-                <option value="" disabled selected hidden>
-                  Select member role
-                </option>
-                <option value="Admin">Admin</option>
-                <option value="User">User</option>
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label className="form-label" htmlFor="">
-                Address
-              </label>
-              <input
-                className="form-input"
-                type="text"
-                id="Address"
-                name="Address"
-                value={formik.values.Address}
+                id="BillingAddress"
+                name="BillingAddress"
+                value={formik.values.BillingAddress}
                 onChange={formik.handleChange}
               />
             </div>
@@ -314,8 +242,21 @@ export const EditMemberModal = ({
                 />
               </div>
             </div>
+            <div className="form-group">
+              <label className="form-label" htmlFor="">
+                Billing Reference
+              </label>
+              <input
+                className="form-input"
+                type="text"
+                id="BillingReference"
+                name="BillingReference"
+                value={formik.values.BillingReference}
+                onChange={formik.handleChange}
+              />
+            </div>
             <button type="submit" className="btn btn-submit">
-              Update Contact
+              Create
             </button>
           </form>
         </div>

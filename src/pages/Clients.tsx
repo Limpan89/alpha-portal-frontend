@@ -31,7 +31,14 @@ export const Clients = () => {
       </header>
 
       <div className="card clients-container">
-        <header className="client-header"></header>
+        <header className="client-header">
+          <input type="checkbox" />
+          <div className="heaer-item">Customer Name</div>
+          <div className="heaer-item">Location</div>
+          <div className="heaer-item">Phone</div>
+          <div className="heaer-item">Date</div>
+          <div className="heaer-item">Status</div>
+        </header>
         {clients.map((c) => (
           <ClientRow client={c} setSelected={setSelected} />
         ))}
