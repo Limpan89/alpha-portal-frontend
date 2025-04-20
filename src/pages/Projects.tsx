@@ -12,6 +12,7 @@ export const Projects = () => {
   const [showEdit, setShowEdit] = useState<boolean>(false);
   const [showAdd, setShowAdd] = useState<boolean>(false);
   const [selected, setSelected] = useState<Project>(defaultProject);
+  const [completed, setCompleted] = useState<boolean>(false);
   const { projects } = useProject();
 
   const HandleAddClick = () => {
@@ -21,6 +22,8 @@ export const Projects = () => {
   useEffect(() => {
     if (selected.id != defaultProject.id) setShowEdit(true);
   }, [selected]);
+
+  useEffect(() => {}, []);
 
   return (
     <div id="projects">
@@ -35,10 +38,30 @@ export const Projects = () => {
           <span>Add Project</span>
         </button>
       </header>
+      <nav className="project-filter">
+        <div
+          className={`filter-option ${!completed ? "active" : ""}`}
+          onClick={() => {
+            setCompleted(false);
+          }}
+        >
+          All
+        </div>
+        <div
+          className={`filter-option ${completed ? "active" : ""}`}
+          onClick={() => {
+            setCompleted(true);
+          }}
+        >
+          Completed
+        </div>
+      </nav>
       <div className="card-container">
-        {projects.map((p) => (
-          <ProjectCard project={p} setSelected={setSelected} />
-        ))}
+        {projects
+          .filter((p) => (completed ? p.status.statusName == "Completed" : p))
+          .map((p) => (
+            <ProjectCard project={p} setSelected={setSelected} />
+          ))}
       </div>
       <AddProjectModal show={showAdd} close={setShowAdd} />
       <EditProjectModal

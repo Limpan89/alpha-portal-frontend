@@ -964,19 +964,28 @@ h6,
   grid-template-columns: 1fr 4fr 2fr 2fr 2fr 1fr 1fr;
   margin-bottom: 1rem;
 
-  .client-profile {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-  }
-
   .client-image {
-    width: 20px;
-    height: 20px;
+    max-width: 20px;
+    max-height: 20px;
     border-radius: 50%;
+    display: block;
   }
 
   .client-status {
     background-color: #187848;
     border-radius: var(--border-radius);
+  }
+}
+
+.project-filter {
+  display: flex;
+  gap: 2rem;
+  font-size: larger;
+  font-weight: 800;
+  color: var(--blue-dark);
+  padding-bottom: 1rem;
+
+  .active {
+    border-bottom: 3px solid var(--blue-dark);
   }
 }
