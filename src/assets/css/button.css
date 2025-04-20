@@ -79,6 +79,8 @@
   background-color: transparent;
   border-color: transparent;
   padding: 0;
+  font-size: 1.5em;
+  font-weight: 400;
   transition: background-color 0.1s ease-in-out, border-color 0.1s ease-in-out,
     color 0.1s ease-in-out;
 }
@@ -89,9 +91,77 @@
   background-color: transparent;
 }
 
-.btn-close::before {
-  content: "\f00d";
-  font-family: var(--font-fa-pro);
-  font-weight: 400;
-  font-size: 1.3em;
+.btn-account {
+  transition: background-color 0.1s ease-in-out, border-color 0.1s ease-in-out,
+    color 0.1s ease-in-out;
+  background-color: var(--btn-account-background-color);
+  border: 1px solid var(--btn-account-border-color);
+  color: var(--btn-account-text-color);
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 40px;
+    width: 40px;
+    object-fit: contain;
+  }
+}
+
+.switch-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--switch-background-color);
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: var(--switch-slider-color);
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--slider-checked-background-color);
+}
+
+input:checked + .slider:before {
+  transform: translateX(18px);
 }

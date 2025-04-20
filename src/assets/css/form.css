@@ -39,6 +39,13 @@ form {
     margin-bottom: 1.2rem;
   }
 
+  .form-horizontal-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 1rem;
+  }
+
   .field-group {
     position: relative;
   }
@@ -85,4 +92,86 @@ form {
   content: "\f071";
   font-family: var(--font-fa-pro);
   font-size: 1.2em;
+}
+
+.form-label {
+  font-size: 1em;
+  font-weight: 600;
+  font-style: normal;
+  font-family: var(--font-standard);
+}
+
+.form-select {
+  position: relative;
+  font-family: var(--font-standard);
+  width: 100%;
+
+  &.has-placeholder {
+    .form-select-trigger {
+      color: var(--form-input-placeholder-color);
+    }
+  }
+
+  &:not(.has-placeholder) {
+    .form-select-trigger {
+      color: var(--form-input-text-color);
+    }
+  }
+
+  .form-select-trigger {
+    width: 100%;
+    min-height: 40px;
+    background-color: var(--form-input-background-color);
+    border: 1px solid var(--form-input-border-color);
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    font-size: 1em;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: border-color 0.2s ease-in-out;
+    position: relative;
+  }
+  .form-select-text {
+    flex: 1;
+    text-align: left;
+  }
+
+  &::before {
+  }
+
+  .form-select-options {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    background-color: var(--form-input-background-color);
+    border: 1px solid var(--form-input-border-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    z-index: 998;
+    display: none;
+  }
+
+  .form-select-option {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out;
+    border-radius: var(--border-radius);
+    margin: 0.5rem;
+
+    &:hover {
+      background-color: var(--blue-light-opacity);
+    }
+  }
+
+  &.open {
+    .form-select-options {
+      display: block;
+    }
+  }
 }

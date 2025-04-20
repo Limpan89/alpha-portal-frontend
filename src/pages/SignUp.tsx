@@ -1,14 +1,64 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LogotypeLink } from "../components/LogotypeLink";
+import { FormikErrors, FormikValues, useFormik } from "formik";
+import { useAuth } from "../contexts/AuthContext";
+
+export interface SignUpValues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  termsAndConditions: boolean;
+}
+
+const validateForm = ({
+  firstName,
+  lastName,
+  email,
+  password,
+  confirmPassword,
+  termsAndConditions,
+}: SignUpValues) => {
+  const errors: FormikErrors<FormikValues> = {};
+
+  if (!firstName || !lastName || !email || !password || !confirmPassword)
+    errors.signup = "All fields Required";
+  else if (
+    !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i.test(email) ||
+    !/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':""\\|,.<>\/?]).+$/i.test(
+      password
+    )
+  )
+    errors.signup = "invalid email or password";
+  else if (confirmPassword !== password)
+    errors.signup = "Password not matching";
+  else if (!termsAndConditions)
+    errors.signup = "Terms and conditions must be accepted";
+
+  return errors;
+};
 
 export const SignUp = () => {
-  const [fname, setFname] = useState<string>("");
-  const [lname, setLname] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [confirm, setConfirm] = useState<string>("");
-  const [terms, setTerms] = useState<boolean>(false);
+  const { signUp } = useAuth();
+  const navigate = useNavigate();
+
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      termsAndConditions: false,
+    },
+    validate: validateForm,
+    onSubmit: async (values) => {
+      await signUp!(values);
+      navigate("/auth/signin", { replace: true });
+    },
+  });
 
   return (
     <div id="signup">
@@ -17,27 +67,27 @@ export const SignUp = () => {
           <h1>Create Account</h1>
         </header>
         <section className="section-body">
-          <form>
+          <form onSubmit={formik.handleSubmit}>
             <div className="form-group">
-              <label htmlFor="fname">First Name</label>
+              <label htmlFor="firstName">First Name</label>
               <input
                 type="text"
-                name="fname"
-                id="fname"
+                name="firstName"
+                id="firstName"
                 placeholder="Enter your first name"
-                value={fname}
-                onChange={(e) => setFname(e.target.value)}
+                value={formik.values.firstName}
+                onChange={formik.handleChange}
               />
             </div>
             <div className="form-group">
-              <label htmlFor="lname">Last Name</label>
+              <label htmlFor="lastName">Last Name</label>
               <input
                 type="text"
-                name="lname"
-                id="lname"
+                name="lastName"
+                id="lastName"
                 placeholder="Enter your last name"
-                value={lname}
-                onChange={(e) => setLname(e.target.value)}
+                value={formik.values.lastName}
+                onChange={formik.handleChange}
               />
             </div>
             <div className="form-group">
@@ -47,8 +97,8 @@ export const SignUp = () => {
                 name="email"
                 id="email"
                 placeholder="Enter your email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formik.values.email}
+                onChange={formik.handleChange}
               />
             </div>
             <div className="form-group">
@@ -58,30 +108,30 @@ export const SignUp = () => {
                 name="password"
                 id="password"
                 placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={formik.values.password}
+                onChange={formik.handleChange}
               />
             </div>
             <div className="form-group">
               <label htmlFor="confirm">Confirm Password</label>
               <input
                 type="password"
-                name="confirm"
-                id="confirm"
+                name="confirmPassword"
+                id="confirmPassword"
                 placeholder="Confirm your password"
-                value={confirm}
-                onChange={(e) => setConfirm(e.target.value)}
+                value={formik.values.confirmPassword}
+                onChange={formik.handleChange}
               />
             </div>
             <div className="checkbox-group">
               <input
                 type="checkbox"
-                name="terms"
-                id="terms"
-                checked={terms}
-                onChange={(e) => setTerms(e.target.checked)}
+                name="termsAndConditions"
+                id="termsAndConditions"
+                checked={formik.values.termsAndConditions}
+                onChange={formik.handleChange}
               />
-              <label htmlFor="terms">
+              <label htmlFor="termsAndConditions">
                 I accept{" "}
                 <Link to="#" className="text-link">
                   Terms and Conditions

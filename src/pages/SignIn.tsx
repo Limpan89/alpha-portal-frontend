@@ -1,10 +1,43 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LogotypeLink } from "../components/LogotypeLink";
+import { FormikErrors, FormikValues, useFormik } from "formik";
+import { useAuth } from "../contexts/AuthContext";
+
+const validateForm = ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
+  const errors: FormikErrors<FormikValues> = {};
+
+  if (!email || !password) errors.login = "All fields Required";
+  else if (
+    !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i.test(email) ||
+    !/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':""\\|,.<>\/?]).+$/i.test(
+      password
+    )
+  )
+    errors.login = "invalid email or password";
+
+  return errors;
+};
 
 export const SignIn = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validate: validateForm,
+    onSubmit: async (values) => {
+      await signIn!(values.email, values.password);
+    },
+  });
 
   return (
     <div id="signin">
@@ -13,7 +46,7 @@ export const SignIn = () => {
           <h1>Login</h1>
         </header>
         <section className="section-body">
-          <form>
+          <form onSubmit={formik.handleSubmit}>
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
@@ -21,8 +54,8 @@ export const SignIn = () => {
                 name="email"
                 id="email"
                 placeholder="Your email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formik.values.email}
+                onChange={formik.handleChange}
               />
             </div>
             <div className="form-group">
@@ -32,8 +65,8 @@ export const SignIn = () => {
                 name="password"
                 id="password"
                 placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={formik.values.password}
+                onChange={formik.handleChange}
               />
             </div>
             <button type="submit" className="btn btn-submit">

@@ -5,13 +5,26 @@ import {
   useState,
   ReactNode,
 } from "react";
+import { API_URL } from "../Constants";
+import { User } from "./UserContext";
+import { SignUpValues } from "../pages/SignUp";
+import { useNavigate } from "react-router-dom";
+
+interface AuthResponse {
+  token: string;
+  isAdmin: boolean;
+  apiKey: string | null;
+  user: User;
+}
 
 export interface AuthValues {
   loading: boolean;
-  user: string | null;
+  user: User | null;
   token: string | null;
-  signUp?(): Promise<void>;
-  signIn?(): Promise<void>;
+  isAdmin: boolean;
+  apiKey: string | null;
+  signUp?(values: SignUpValues): Promise<void>;
+  signIn?(email: string, password: string): Promise<void>;
   signOut?(): Promise<void>;
   authFetch?(url: string, options?: RequestInit): Promise<Response>;
 }
@@ -20,6 +33,8 @@ const defaultValues: AuthValues = {
   loading: true,
   user: null,
   token: null,
+  isAdmin: false,
+  apiKey: null,
 };
 
 const AuthContext = createContext<AuthValues>(defaultValues);
@@ -28,7 +43,10 @@ export const useAuth = (): AuthValues => useContext(AuthContext);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [token, setToken] = useState<string | null>(null);
-  const [user, setUser] = useState<string | null>("admin");
+  const [user, setUser] = useState<User | null>(null);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [apiKey, setApiKey] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
@@ -36,13 +54,57 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setLoading(false);
   }, []);
 
-  const signUp = async () => {};
+  const signUp = async ({
+    firstName,
+    lastName,
+    email,
+    password,
+    confirmPassword,
+    termsAndConditions,
+  }: SignUpValues) => {
+    const response = await fetch(`${API_URL}/api/auth/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        email,
+        password,
+        confirmPassword,
+        termsAndConditions,
+      }),
+    });
 
-  const signIn = async () => {};
+    if (response.ok) navigate("/auth/signin", { replace: true });
+  };
+
+  const signIn = async (email: string, password: string) => {
+    const response = await fetch(`${API_URL}/api/auth/signin`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (response.ok) {
+      const data: AuthResponse = await response.json();
+      localStorage.setItem("authToken", data.token);
+      setUser(data.user);
+      setToken(data.token);
+      setApiKey(data.apiKey);
+      setIsAdmin(data.isAdmin);
+      navigate("/admin/projects", { replace: true });
+    }
+  };
 
   const signOut = async () => {
     localStorage.removeItem("authToken");
     setToken(null);
+    setUser(null);
+    setIsAdmin(false);
     setUser(null);
   };
 
@@ -56,7 +118,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (token) {
       headers.append("Authorization", `Bearer ${token}`);
     }
-    return fetch(url, { ...options, headers });
+    if (apiKey) {
+      headers.append("X-ADM-API-KEY", apiKey);
+    }
+    return await fetch(`${API_URL}${url}`, { ...options, headers });
   };
 
   return (
@@ -65,6 +130,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         loading: loading,
         user: user,
         token: token,
+        isAdmin: isAdmin,
+        apiKey: apiKey,
         signUp: signUp,
         signIn: signIn,
         signOut: signOut,
