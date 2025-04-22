@@ -89,6 +89,7 @@ export const AddClientModal = ({
         body: formData,
       });
 
+      // --- AI - ChatGPT ---
       if (response.ok) {
         console.log("Success");
       } else {
