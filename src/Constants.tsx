@@ -1,1 +1,1 @@
-export const API_URL: string = "https://localhost:7080";
+export const API_URL: string = "https://alphaportalapi.azurewebsites.net";
