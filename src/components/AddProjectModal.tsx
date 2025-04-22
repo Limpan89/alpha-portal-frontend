@@ -20,7 +20,6 @@ interface FormValues {
 const validateForm = ({
   ProjectName,
   Description,
-  NewImage,
   StartDate,
   EndDate,
   Budget,

@@ -3,7 +3,7 @@ import { FormikErrors, FormikValues, useFormik } from "formik";
 import { API_URL } from "../Constants";
 import { useAuth } from "../contexts/AuthContext";
 import { useEffect } from "react";
-import { User, useUser } from "../contexts/UserContext";
+import { User } from "../contexts/UserContext";
 
 interface FormValues {
   NewImage: File | null;
@@ -18,7 +18,6 @@ interface FormValues {
 }
 
 const validateForm = ({
-  NewImage,
   FirstName,
   LastName,
   Phone,
@@ -57,8 +56,6 @@ export const EditMemberModal = ({
   const HandleCloseClick = () => {
     close(false);
   };
-
-  const { getUsers } = useUser();
 
   useEffect(() => {
     formik.resetForm();

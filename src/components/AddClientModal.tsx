@@ -16,7 +16,6 @@ interface FormValues {
 }
 
 const validateForm = ({
-  NewImage,
   ClientName,
   Email,
   Phone,

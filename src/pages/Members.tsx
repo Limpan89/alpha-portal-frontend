@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { ModalButton } from "../components/ModalButton";
 import { UserCard } from "../components/UserCard";
 import { defaultUser, User, useUser } from "../contexts/UserContext";
 import { AddMemberModal } from "../components/AddMemberModal";

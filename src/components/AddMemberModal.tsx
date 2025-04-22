@@ -2,8 +2,6 @@ import { IoMdClose } from "react-icons/io";
 import { FormikErrors, FormikValues, useFormik } from "formik";
 import { API_URL } from "../Constants";
 import { useAuth } from "../contexts/AuthContext";
-import { useUser } from "../contexts/UserContext";
-import { useClient } from "../contexts/ClientContext";
 import { useEffect } from "react";
 
 interface FormValues {
@@ -20,7 +18,6 @@ interface FormValues {
 }
 
 const validateForm = ({
-  NewImage,
   FirstName,
   LastName,
   Email,
