@@ -16,7 +16,6 @@ interface FormValues {
 }
 
 const validateForm = ({
-  NewImage,
   ClientName,
   Email,
   Phone,
@@ -90,6 +89,7 @@ export const AddClientModal = ({
         body: formData,
       });
 
+      // --- AI - ChatGPT ---
       if (response.ok) {
         console.log("Success");
       } else {

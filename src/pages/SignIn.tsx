@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { LogotypeLink } from "../components/LogotypeLink";
 import { FormikErrors, FormikValues, useFormik } from "formik";
 import { useAuth } from "../contexts/AuthContext";
@@ -26,7 +26,6 @@ const validateForm = ({
 
 export const SignIn = () => {
   const { signIn } = useAuth();
-  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {

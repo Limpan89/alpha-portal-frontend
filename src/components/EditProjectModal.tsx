@@ -23,7 +23,6 @@ interface FormValues {
 const validateForm = ({
   ProjectName,
   Description,
-  NewImage,
   StartDate,
   EndDate,
   Budget,
@@ -87,6 +86,7 @@ export const EditProjectModal = ({
         body: formData,
       });
 
+      // --- AI - ChatGPT ---
       if (response.ok) {
         console.log("Success");
       } else {

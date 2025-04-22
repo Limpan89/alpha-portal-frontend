@@ -20,7 +20,6 @@ interface FormValues {
 const validateForm = ({
   ProjectName,
   Description,
-  NewImage,
   StartDate,
   EndDate,
   Budget,
@@ -55,18 +54,20 @@ export const AddProjectModal = ({
   const { clients } = useClient();
 
   const handleSubmit = async (values: FormValues) => {
+    // --- AI - ChatGPT start ---
     const formData = new FormData();
 
     formData.append("ProjectName", values.ProjectName);
-    formData.append("Description", values.Description ?? ""); // nullable
+    formData.append("Description", values.Description ?? "");
     if (values.NewImage) {
       formData.append("NewImage", values.NewImage);
     }
-    formData.append("StartDate", values.StartDate); // ISO string or yyyy-MM-ddTHH:mm:ss
+    formData.append("StartDate", values.StartDate);
     formData.append("EndDate", values.EndDate);
     formData.append("Budget", values.Budget.toString());
     formData.append("ClientId", values.ClientId);
     formData.append("UserId", values.UserId);
+    // --- AI - ChatGPT end ---
 
     try {
       const headers: HeadersInit = {
@@ -82,6 +83,7 @@ export const AddProjectModal = ({
         body: formData,
       });
 
+      // --- AI - ChatGPT ---
       if (response.ok) {
         console.log("Success");
       } else {
